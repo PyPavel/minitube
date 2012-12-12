@@ -111,7 +111,12 @@ int main(int argc, char **argv) {
     app.setFont(QFont("Segoe UI", 9));
 #endif
 
+#ifndef QTOPIA
     mainWin.show();
+#else
+    app.setMainWidget(&mainWin);
+    mainWin.showMaximized();
+#endif
 
 #ifndef QTOPIA
     mainWin.connect(&app, SIGNAL(messageReceived(const QString &)), &mainWin, SLOT(messageReceived(const QString &)));

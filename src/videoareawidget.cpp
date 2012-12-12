@@ -69,7 +69,7 @@ void VideoAreaWidget::showLoading(Video *video) {
 void VideoAreaWidget::showSnapshotPreview(QPixmap pixmap) {
     snapshotPreview->setPixmap(pixmap);
     stackedLayout->setCurrentWidget(snapshotPreview);
-#ifndef Q_WS_X11
+#if !defined(Q_WS_X11) && !defined(QTOPIA)
     Extra::flashInWidget(snapshotPreview);
 #endif
     QTimer::singleShot(1500, this, SLOT(hideSnapshotPreview()));

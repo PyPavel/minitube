@@ -43,10 +43,12 @@ void DownloadSettings::changeFolder() {
     dialog->setDirectory(QDesktopServices::storageLocation(QDesktopServices::HomeLocation));
     dialog->open(this, SLOT(folderChosen(const QString &)));
 #else
+#ifndef QTOPIA
     QString folder = QFileDialog::getExistingDirectory(window(), tr("Choose the download location"),
                                                     QDesktopServices::storageLocation(QDesktopServices::HomeLocation),
                                                     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks | QFileDialog::ReadOnly);
     folderChosen(folder);
+#endif
 #endif
 }
 

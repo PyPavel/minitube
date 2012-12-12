@@ -42,11 +42,13 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
     listView->setItemDelegate(new PrettyItemDelegate(this));
     listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
+#ifndef QTOPIA
     // dragndrop
     listView->setDragEnabled(true);
     listView->setAcceptDrops(true);
     listView->setDropIndicatorShown(true);
     listView->setDragDropMode(QAbstractItemView::DragDrop);
+#endif
 
     // cosmetics
     listView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);

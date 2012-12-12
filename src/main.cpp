@@ -1,5 +1,9 @@
 #include <QtGui>
+#ifdef QTOPIA
+#include <qtopiaapplication.h>
+#else
 #include <qtsingleapplication.h>
+#endif
 #include "constants.h"
 #include "MainWindow.h"
 #include "searchparams.h"
@@ -15,15 +19,21 @@ int main(int argc, char **argv) {
     mac::MacMain();
 #endif
 
+#ifdef QTOPIA
+    QtopiaApplication app(argc, argv);
+#else
     QtSingleApplication app(argc, argv);
+#endif
     QString message = app.arguments().size() > 1 ? app.arguments().at(1) : "";
     if (message == "--help") {
         MainWindow::printHelp();
         return 0;
     }
 
+#ifndef QTOPIA
     if (app.sendMessage(message))
         return 0;
+#endif
 
     app.setApplicationName(Constants::NAME);
     app.setOrganizationName(Constants::ORG_NAME);
@@ -103,8 +113,10 @@ int main(int argc, char **argv) {
 
     mainWin.show();
 
+#ifndef QTOPIA
     mainWin.connect(&app, SIGNAL(messageReceived(const QString &)), &mainWin, SLOT(messageReceived(const QString &)));
     app.setActivationWindow(&mainWin, true);
+#endif
 
     // all string literals are UTF-8
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));

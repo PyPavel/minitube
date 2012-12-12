@@ -30,8 +30,10 @@ signals:
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
+#ifndef QTOPIA
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
+#endif
 
 private slots:
     void hideSnapshotPreview();

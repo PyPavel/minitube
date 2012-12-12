@@ -1329,6 +1329,7 @@ void MainWindow::startToolbarSearch(QString query) {
     showMedia(searchParams);
 }
 
+#ifndef QTOPIA
 void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasFormat("text/uri-list")) {
         QList<QUrl> urls = event->mimeData()->urls();
@@ -1354,6 +1355,7 @@ void MainWindow::dropEvent(QDropEvent *event) {
         showMedia(searchParams);
     }
 }
+#endif
 
 void MainWindow::checkForUpdate() {
     static const QString updateCheckKey = "updateCheck";

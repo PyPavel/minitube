@@ -53,7 +53,9 @@ ClearButton::ClearButton(QWidget *parent)
     : QAbstractButton(parent)
 {
     setCursor(Qt::ArrowCursor);
+#ifndef QTOPIA
     setToolTip(tr("Clear"));
+#endif
     setVisible(false);
     setFocusPolicy(Qt::NoFocus);
 }

@@ -99,6 +99,7 @@ void VideoAreaWidget::mousePressEvent(QMouseEvent *event) {
         emit rightClicked();
 }
 
+#ifndef QTOPIA
 void VideoAreaWidget::dragEnterEvent(QDragEnterEvent *event) {
     // qDebug() << event->mimeData()->formats();
     if (event->mimeData()->hasFormat("application/x-minitube-video")) {
@@ -120,3 +121,4 @@ void VideoAreaWidget::dropEvent(QDropEvent *event) {
         listModel->setActiveRow(row);
     event->acceptProposedAction();
 }
+#endif

@@ -39,8 +39,10 @@ protected:
     void changeEvent(QEvent *);
     void closeEvent(QCloseEvent *);
     bool eventFilter(QObject *obj, QEvent *event);
+#ifndef QTOPIA
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
+#endif
     void resizeEvent(QResizeEvent *);
 
 private slots:

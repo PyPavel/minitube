@@ -68,6 +68,7 @@ SearchView::SearchView(QWidget *parent) : QWidget(parent) {
     hLayout->setAlignment(Qt::AlignCenter);
     mainLayout->addLayout(hLayout);
 
+#ifndef QTOPIA
     QLabel *logo = new QLabel(this);
     QString resource = "app";
 #ifndef Q_WS_X11
@@ -77,10 +78,6 @@ SearchView::SearchView(QWidget *parent) : QWidget(parent) {
 #endif
     logo->setPixmap(QPixmap(":/images/" + resource + ".png"));
 
-#ifdef QTOPIA
-    logo->setMaximumSize(64, 64);
-    logo->setMinimumSize(64, 64);
-#else
     hLayout->addWidget(logo, 0, Qt::AlignTop);
     hLayout->addSpacing(PADDING);
 #endif

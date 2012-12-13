@@ -51,6 +51,7 @@
 #ifndef Q_WS_X11
 #include "extra.h"
 #endif
+#include <QDebug>
 
 #ifdef Q_WS_X11
 
@@ -105,6 +106,10 @@ Q_GLOBAL_STATIC(QtIconLoaderImplementation, iconLoaderInstance)
         QIcon QtIconLoader::icon(const QString &name)
 {
     QIcon icon;
+
+#ifdef QTOPIA
+    return QIcon(":images/" + name + ".png");
+#endif
 
 #ifdef Q_WS_X11
 #if QT_VERSION < 0x040600

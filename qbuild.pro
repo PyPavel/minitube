@@ -113,7 +113,7 @@ SOURCES += src/main.cpp \
     src/refinesearchwidget.cpp \
     src/refinesearchbutton.cpp \
     src/sidebarwidget.cpp
-RESOURCES += resources.qrc
+RESOURCES += resources-qtmoko.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/
 MOC_DIR = build/moc/

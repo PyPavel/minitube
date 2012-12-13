@@ -610,6 +610,19 @@ void MainWindow::createToolBars() {
     mainToolBar->setIconSize(QSize(32, 32));
 #endif
 
+#ifdef QTOPIA
+    QToolBar *mainToolBar2 = new QToolBar(this);
+#if QT_VERSION < 0x040600 | defined(APP_MAC)
+    mainToolBar2->setToolButtonStyle(Qt::ToolButtonIconOnly);
+#else
+    mainToolBar2->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+#endif
+    mainToolBar2->setFloatable(false);
+    mainToolBar2->setMovable(false);
+#else
+    QToolBar *mainToolBar2 = mainToolBar;
+#endif
+
     mainToolBar->addAction(stopAct);
     mainToolBar->addAction(pauseAct);
     mainToolBar->addAction(skipAct);
@@ -629,14 +642,14 @@ void MainWindow::createToolBars() {
     QFont smallerFont = FontUtils::small();
     currentTime = new QLabel(mainToolBar);
     currentTime->setFont(smallerFont);
-    mainToolBar->addWidget(currentTime);
+    mainToolBar2->addWidget(currentTime);
 
-    mainToolBar->addWidget(new Spacer());
+    mainToolBar2->addWidget(new Spacer());
 
     seekSlider = new Phonon::SeekSlider(this);
     seekSlider->setIconVisible(false);
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-    mainToolBar->addWidget(seekSlider);
+    mainToolBar2->addWidget(seekSlider);
 
 /*
     mainToolBar->addWidget(new Spacer());
@@ -650,11 +663,11 @@ void MainWindow::createToolBars() {
 
     totalTime = new QLabel(mainToolBar);
     totalTime->setFont(smallerFont);
-    mainToolBar->addWidget(totalTime);
+    mainToolBar2->addWidget(totalTime);
 
-    mainToolBar->addWidget(new Spacer());
+    mainToolBar2->addWidget(new Spacer());
 
-    mainToolBar->addAction(volumeMuteAct);
+    mainToolBar2->addAction(volumeMuteAct);
 
     volumeSlider = new Phonon::VolumeSlider(this);
     volumeSlider->setMuteVisible(false);
@@ -666,9 +679,9 @@ void MainWindow::createToolBars() {
                 volumeUpAct->shortcut().toString(QKeySequence::NativeText), volumeDownAct->shortcut().toString(QKeySequence::NativeText)));
     // this makes the volume slider smaller
     volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    mainToolBar->addWidget(volumeSlider);
+    mainToolBar2->addWidget(volumeSlider);
 
-    mainToolBar->addWidget(new Spacer());
+    mainToolBar2->addWidget(new Spacer());
 
 #ifdef APP_MAC
     SearchWrapper* searchWrapper = new SearchWrapper(this);
@@ -683,6 +696,8 @@ void MainWindow::createToolBars() {
     toolbarSearch->setStatusTip(searchFocusAct->statusTip());
 #ifdef APP_MAC
     mainToolBar->addWidget(searchWrapper);
+#elif defined(QTOPIA)
+    toolbarSearch->setVisible(false);
 #else
     mainToolBar->addWidget(toolbarSearch);
     Spacer* spacer = new Spacer();
@@ -691,6 +706,9 @@ void MainWindow::createToolBars() {
 #endif
 
     addToolBar(mainToolBar);
+#ifdef QTOPIA
+    addToolBar(Qt::BottomToolBarArea, mainToolBar2);
+#endif
 }
 
 void MainWindow::createStatusBar() {

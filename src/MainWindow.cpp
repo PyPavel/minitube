@@ -791,11 +791,11 @@ void MainWindow::showWidget ( QWidget* widget ) {
     if (newView) {
         widget->setEnabled(true);
         widget->show();
+        setWindowTitle(Constants::NAME);
 /*        QMap<QString,QVariant> metadata = newView->metadata();
         QString windowTitle = metadata.value("title").toString();
         if (windowTitle.length())
             windowTitle += " - ";
-        setWindowTitle(windowTitle + Constants::NAME);
         statusBar()->showMessage((metadata.value("description").toString()));*/
     }
 #endif

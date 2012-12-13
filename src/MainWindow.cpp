@@ -133,8 +133,9 @@ MainWindow::MainWindow() :
     mouseTimer->setSingleShot(true);
     connect(mouseTimer, SIGNAL(timeout()), SLOT(hideMouse()));
 
+#ifndef QTOPIA
     QTimer::singleShot(0, this, SLOT(checkForUpdate()));
-
+#endif
 }
 
 MainWindow::~MainWindow() {

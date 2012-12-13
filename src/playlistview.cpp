@@ -29,10 +29,14 @@ void PlaylistView::mouseMoveEvent(QMouseEvent *event) {
             return;
 
         QMetaObject::invokeMethod(model(), "enterAuthorHover");
+#ifndef QTOPIA
         setCursor(Qt::PointingHandCursor);
+#endif
     } else {
         QMetaObject::invokeMethod(model(), "exitAuthorHover");
+#ifndef QTOPIA
         unsetCursor();
+#endif
     }
 
 }

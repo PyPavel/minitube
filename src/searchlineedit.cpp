@@ -52,8 +52,8 @@
 ClearButton::ClearButton(QWidget *parent)
     : QAbstractButton(parent)
 {
-    setCursor(Qt::ArrowCursor);
 #ifndef QTOPIA
+    setCursor(Qt::ArrowCursor);
     setToolTip(tr("Clear"));
 #endif
     setVisible(false);
@@ -107,7 +107,9 @@ SearchButton::SearchButton(QWidget *parent)
     m_menu(0)
 {
     setObjectName(QLatin1String("SearchButton"));
+#ifndef QTOPIA
     setCursor(Qt::ArrowCursor);
+#endif
     setFocusPolicy(Qt::NoFocus);
 }
 

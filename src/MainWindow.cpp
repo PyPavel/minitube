@@ -177,7 +177,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
 #endif
 
         // show the normal cursor
+#ifndef QTOPIA
         unsetCursor();
+#endif
         // then hide it again after a few seconds
         mouseTimer->start();
 
@@ -758,7 +760,7 @@ void MainWindow::showWidget ( QWidget* widget ) {
 
     // call hide method on the current view
 #ifndef QTOPIA
-    View* oldView = static_cast<View *> (views->currentWidget());
+    View* oldView = dynamic_cast<View *> (views->currentWidget());
     if (oldView) {
         oldView->disappear();
         views->currentWidget()->setEnabled(false);
@@ -773,7 +775,7 @@ void MainWindow::showWidget ( QWidget* widget ) {
 
     // call show method on the new view
 #ifndef QTOPIA
-    View* newView = static_cast<View *> (widget);
+    View* newView = dynamic_cast<View *> (widget);
     if (newView) {
         widget->setEnabled(true);
         newView->appear();
@@ -1097,7 +1099,9 @@ void MainWindow::updateUIForFullscreen() {
         hideMouse();
     } else {
         mouseTimer->stop();
+#ifndef QTOPIA
         unsetCursor();
+#endif
     }
 }
 
@@ -1496,7 +1500,9 @@ void MainWindow::messageReceived(const QString &message) {
 }
 
 void MainWindow::hideMouse() {
+#ifndef QTOPIA
     setCursor(Qt::BlankCursor);
+#endif
     mediaView->setPlaylistVisible(false);
 #ifndef APP_MAC
     mainToolBar->setVisible(false);

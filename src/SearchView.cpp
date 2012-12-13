@@ -76,13 +76,28 @@ SearchView::SearchView(QWidget *parent) : QWidget(parent) {
     logo->setScaledContents(true);
 #endif
     logo->setPixmap(QPixmap(":/images/" + resource + ".png"));
+
+#ifdef QTOPIA
+    logo->setMaximumSize(64, 64);
+    logo->setMinimumSize(64, 64);
+#else
     hLayout->addWidget(logo, 0, Qt::AlignTop);
     hLayout->addSpacing(PADDING);
+#endif
 
     QVBoxLayout *layout = new QVBoxLayout();
     layout->setAlignment(Qt::AlignCenter);
     hLayout->addLayout(layout);
 
+#ifdef QTOPIA
+    QLabel *welcomeLabel =
+            new QLabel("<h2 style='font-weight:normal'>" +
+                       tr("Welcome to <a href='%1'>%2</a>,")
+                       // .replace("<a ", "<a style='color:palette(text)'")
+                       .replace("<a href", "<a style='text-decoration:none; color:palette(text); font-weight:bold' href")
+                       .arg(Constants::WEBSITE, Constants::NAME)
+                       + "</h2>", this);
+#else
     QLabel *welcomeLabel =
             new QLabel("<h1 style='font-weight:normal'>" +
                        tr("Welcome to <a href='%1'>%2</a>,")
@@ -90,6 +105,9 @@ SearchView::SearchView(QWidget *parent) : QWidget(parent) {
                        .replace("<a href", "<a style='text-decoration:none; color:palette(text); font-weight:bold' href")
                        .arg(Constants::WEBSITE, Constants::NAME)
                        + "</h1>", this);
+#endif
+
+
     welcomeLabel->setOpenExternalLinks(true);
     layout->addWidget(welcomeLabel);
 

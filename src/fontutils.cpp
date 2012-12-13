@@ -51,7 +51,11 @@ const QFont FontUtils::big() {
     static bool initialized = false;
     if (!initialized) {
       initialized = true;
+#ifdef QTOPIA
+      font.setPointSize(font.pointSize()*1.0);
+#else
       font.setPointSize(font.pointSize()*1.5);
+#endif
     }
     return font;
 }

@@ -126,9 +126,9 @@ include(locale/locale.pri)
 
 # Package info
 pkg [
-    name=qgcide-eng-dictionary
-    desc="An English explanatory dictionary with GCIDE database"
-    license=GPLv2
+    name=minitube
+    desc="Watch YouTube videos"
+    license=LGPLv2
     version=1.0
     maintainer="Radek Polak <psonek2@seznam.cz>"
 ]
@@ -141,12 +141,12 @@ target [
 
 desktop [
     hint=desktop
-    files=minitube.desktop
+    files=qtmoko-minitube.desktop
     path=/apps/Applications
 ]
 
 pics [
     hint=pics
-    files=images/*
-    path=/pics/qgcide
+    files=data/minitube.svg
+    path=/pics
 ]

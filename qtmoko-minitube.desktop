@@ -1,0 +1,10 @@
+[Translation]
+File=QtopiaApplications
+Context=Minitube
+[Desktop Entry]
+Comment=Watch YouTube videos
+Exec=minitube
+Icon=minitube
+Type=Application
+Name[]=Minitube
+Categories=MainApplications

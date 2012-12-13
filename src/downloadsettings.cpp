@@ -57,7 +57,7 @@ void DownloadSettings::folderChosen(const QString &dir) {
         QSettings settings;
         settings.setValue("downloadFolder", dir);
         updateMessage();
-        QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
+        QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
         if (mainWindow) {
             QString status;
             status = tr("Download location changed.");

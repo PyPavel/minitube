@@ -104,7 +104,7 @@ void SegmentedControl::mouseMoveEvent (QMouseEvent *event) {
         update();
 
         // status tip
-        QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
+        QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
         if (mainWindow) mainWindow->statusBar()->showMessage(action->statusTip());
     }
 }
@@ -129,7 +129,7 @@ void SegmentedControl::mouseReleaseEvent(QMouseEvent *event) {
 void SegmentedControl::leaveEvent(QEvent *event) {
     QWidget::leaveEvent(event);
     // status tip
-    QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
+    QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
     if (mainWindow) mainWindow->statusBar()->clearMessage();
     d->hoveredAction = 0;
     d->pressedAction = 0;

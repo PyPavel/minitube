@@ -9,6 +9,9 @@
 #ifdef Q_WS_X11
 #include "gnomeglobalshortcutbackend.h"
 #endif
+#ifdef QTOPIA
+#include <QSoftMenuBar>
+#endif
 #ifdef Q_WS_MAC
 #include "mac_startup.h"
 #include "macfullscreen.h"
@@ -503,7 +506,13 @@ void MainWindow::createMenus() {
 
     QMap<QString, QMenu*> *menus = The::globalMenus();
 
-    fileMenu = menuBar()->addMenu(tr("&Application"));
+#ifdef QTOPIA
+    QMenu *bar = QSoftMenuBar::menuFor(this);
+#else
+    QMenuBar *bar = menuBar();
+#endif
+
+    fileMenu = bar->addMenu(tr("&Application"));
 #ifdef APP_DEMO
     QAction* action = new QAction(tr("Buy %1...").arg(Constants::NAME), this);
     action->setMenuRole(QAction::ApplicationSpecificRole);
@@ -516,7 +525,7 @@ void MainWindow::createMenus() {
 #endif
     fileMenu->addAction(quitAct);
 
-    QMenu* playbackMenu = menuBar()->addMenu(tr("&Playback"));
+    QMenu* playbackMenu = bar->addMenu(tr("&Playback"));
     menus->insert("playback", playbackMenu);
     playbackMenu->addAction(pauseAct);
     playbackMenu->addAction(stopAct);
@@ -530,7 +539,7 @@ void MainWindow::createMenus() {
     MacSupport::dockMenu(playbackMenu);
 #endif
 
-    playlistMenu = menuBar()->addMenu(tr("&Playlist"));
+    playlistMenu = bar->addMenu(tr("&Playlist"));
     menus->insert("playlist", playlistMenu);
     playlistMenu->addAction(removeAct);
     playlistMenu->addSeparator();
@@ -539,7 +548,7 @@ void MainWindow::createMenus() {
     playlistMenu->addSeparator();
     playlistMenu->addAction(The::globalActions()->value("refine-search"));
 
-    QMenu* videoMenu = menuBar()->addMenu(tr("&Video"));
+    QMenu* videoMenu = bar->addMenu(tr("&Video"));
     menus->insert("video", videoMenu);
     videoMenu->addAction(findVideoPartsAct);
     videoMenu->addSeparator();
@@ -551,14 +560,14 @@ void MainWindow::createMenus() {
 #endif
     // videoMenu->addAction(The::globalActions()->value("snapshot"));
 
-    QMenu* viewMenu = menuBar()->addMenu(tr("&View"));
+    QMenu* viewMenu = bar->addMenu(tr("&View"));
     menus->insert("view", viewMenu);
     viewMenu->addAction(fullscreenAct);
     viewMenu->addAction(compactViewAct);
     viewMenu->addSeparator();
     viewMenu->addAction(The::globalActions()->value("ontop"));
 
-    QMenu* shareMenu = menuBar()->addMenu(tr("&Share"));
+    QMenu* shareMenu = bar->addMenu(tr("&Share"));
     menus->insert("share", shareMenu);
     shareMenu->addAction(copyPageAct);
     shareMenu->addSeparator();
@@ -572,7 +581,7 @@ void MainWindow::createMenus() {
     MacSupport::windowMenu(this);
 #endif
 
-    helpMenu = menuBar()->addMenu(tr("&Help"));
+    helpMenu = bar->addMenu(tr("&Help"));
     helpMenu->addAction(siteAct);
 #if !defined(APP_MAC) && !defined(APP_WIN)
     helpMenu->addAction(donateAct);
@@ -748,14 +757,23 @@ void MainWindow::showWidget ( QWidget* widget ) {
     setUpdatesEnabled(false);
 
     // call hide method on the current view
-    View* oldView = dynamic_cast<View *> (views->currentWidget());
+#ifndef QTOPIA
+    View* oldView = static_cast<View *> (views->currentWidget());
     if (oldView) {
         oldView->disappear();
         views->currentWidget()->setEnabled(false);
     }
+#else
+    QWidget* oldView = views->currentWidget();
+    if (oldView) {
+        oldView->hide();
+        oldView->setEnabled(false);
+    }
+#endif
 
     // call show method on the new view
-    View* newView = dynamic_cast<View *> (widget);
+#ifndef QTOPIA
+    View* newView = static_cast<View *> (widget);
     if (newView) {
         widget->setEnabled(true);
         newView->appear();
@@ -766,6 +784,19 @@ void MainWindow::showWidget ( QWidget* widget ) {
         setWindowTitle(windowTitle + Constants::NAME);
         statusBar()->showMessage((metadata.value("description").toString()));
     }
+#else
+    QWidget* newView = widget;
+    if (newView) {
+        widget->setEnabled(true);
+        widget->show();
+/*        QMap<QString,QVariant> metadata = newView->metadata();
+        QString windowTitle = metadata.value("title").toString();
+        if (windowTitle.length())
+            windowTitle += " - ";
+        setWindowTitle(windowTitle + Constants::NAME);
+        statusBar()->showMessage((metadata.value("description").toString()));*/
+    }
+#endif
 
     stopAct->setEnabled(widget == mediaView);
     compactViewAct->setEnabled(widget == mediaView);

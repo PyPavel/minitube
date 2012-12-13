@@ -122,7 +122,7 @@ void THBlackBar::mouseMoveEvent (QMouseEvent *event) {
         update();
 
         // status tip
-        QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
+        QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
         if (mainWindow) mainWindow->statusBar()->showMessage(action->statusTip());
     }
 }
@@ -148,7 +148,7 @@ void THBlackBar::mousePressEvent (QMouseEvent *event) {
 
 void THBlackBar::leaveEvent(QEvent *event) {
     // status tip
-    QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
+    QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
     if (mainWindow) mainWindow->statusBar()->clearMessage();
 }
 

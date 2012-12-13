@@ -361,7 +361,7 @@ bool ListModel::dropMimeData(const QMimeData *data,
     else
         beginRow = rowCount(QModelIndex());
 
-    const VideoMimeData* videoMimeData = dynamic_cast<const VideoMimeData*>( data );
+    const VideoMimeData* videoMimeData = static_cast<const VideoMimeData*>( data );
     if(!videoMimeData ) return false;
 
     QList<Video*> droppedVideos = videoMimeData->videos();

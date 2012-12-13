@@ -8,12 +8,12 @@ PlaylistView::PlaylistView(QWidget *parent) : QListView(parent) {
 }
 
 void PlaylistView::itemEntered(const QModelIndex &index) {
-    ListModel *listModel = dynamic_cast<ListModel *>(model());
+    ListModel *listModel = static_cast<ListModel *>(model());
     if (listModel) listModel->setHoveredRow(index.row());
 }
 
 void PlaylistView::leaveEvent(QEvent * /* event */) {
-    ListModel *listModel = dynamic_cast<ListModel *>(model());
+    ListModel *listModel = static_cast<ListModel *>(model());
     if (listModel) listModel->clearHover();
 }
 
@@ -24,7 +24,7 @@ void PlaylistView::mouseMoveEvent(QMouseEvent *event) {
     if (isHoveringAuthor(event)) {
 
         // check for special "message" item
-        ListModel *listModel = dynamic_cast<ListModel *>(model());
+        ListModel *listModel = static_cast<ListModel *>(model());
         if (listModel && listModel->rowCount() == indexAt(event->pos()).row())
             return;
 
@@ -62,7 +62,7 @@ bool PlaylistView::isHoveringAuthor(QMouseEvent *event) {
     const QRect itemRect = visualRect(itemIndex);
     // qDebug() << " itemRect.x()" <<  itemRect.x();
 
-    PrettyItemDelegate *delegate = dynamic_cast<PrettyItemDelegate *>(itemDelegate());
+    PrettyItemDelegate *delegate = static_cast<PrettyItemDelegate *>(itemDelegate());
     if (!delegate) return false;
 
     QRect rect = delegate->authorRect(itemIndex);

@@ -315,7 +315,7 @@ void MediaView::activeRowChanged(int row) {
     timerPlayFlag = false;
 
     // video title in the statusbar
-    QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
+    QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
     if (mainWindow) mainWindow->statusBar()->showMessage(video->title());
 
 
@@ -366,7 +366,7 @@ void MediaView::gotStreamUrl(QUrl streamUrl) {
 
 /*
 void MediaView::downloadProgress(int percent) {
-    MainWindow* mainWindow = dynamic_cast<MainWindow*>(window());
+    MainWindow* mainWindow = static_cast<MainWindow*>(window());
 
     mainWindow->getSeekSlider()->setStyleSheet(" QSlider::groove:horizontal {"
         "border: 1px solid #999999;"
@@ -541,7 +541,7 @@ void MediaView::copyWebPage() {
     if (!video) return;
     QString address = video->webpage().toString();
     QApplication::clipboard()->setText(address);
-    QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
+    QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
     QString message = tr("You can now paste the YouTube link into another application");
     if (mainWindow) mainWindow->statusBar()->showMessage(message);
 }
@@ -552,7 +552,7 @@ void MediaView::copyVideoLink() {
     QApplication::clipboard()->setText(video->getStreamUrl().toEncoded());
     QString message = tr("You can now paste the video stream URL into another application")
             + ". " + tr("The link will be valid only for a limited time.");
-    QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
+    QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
     if (mainWindow) mainWindow->statusBar()->showMessage(message);
 }
 
@@ -708,7 +708,7 @@ void MediaView::downloadVideo() {
 
     // The::globalActions()->value("download")->setEnabled(DownloadManager::instance()->itemForVideo(video) == 0);
 
-    QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
+    QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
     QString message = tr("Downloading %1").arg(video->title());
     if (mainWindow) mainWindow->statusBar()->showMessage(message);
 }

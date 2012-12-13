@@ -209,7 +209,7 @@ void NetworkAccess::error(QNetworkReply::NetworkError code) {
         return;
 
     // report the error in the status bar
-    QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(qApp->topLevelWidgets().first());
+    QMainWindow* mainWindow = static_cast<QMainWindow*>(qApp->topLevelWidgets().first());
     if (mainWindow) mainWindow->statusBar()->showMessage(
             tr("Network error: %1").arg(networkReply->errorString()));
 

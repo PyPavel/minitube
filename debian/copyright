@@ -1,0 +1,28 @@
+This work was packaged for Debian by:
+
+    Radek Polak <psonek2@seznam.cz> on Sat, 05 Feb 2011 20:23:56 +0100
+
+It was downloaded from:
+
+    http://gitorious.org/minitube
+    http://flavio.tordini.org/minitube
+    https://github.com/radekp/minitube
+
+Upstream Author(s):
+
+    http://flavio.tordini.org/minitube
+
+Copyright:
+
+    Copyright (C) 2012 Flavio Tordini
+
+License:
+
+    GPL-3+
+
+The Debian packaging is:
+
+    Copyright (C) 2011 Radek Polak <psonek2@seznam.cz>
+
+and is licensed under the GPL version 3,
+see "/usr/share/common-licenses/GPL-3".

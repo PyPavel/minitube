@@ -1,0 +1,14 @@
+Source: qtmoko-minitube
+Section: comm
+Priority: optional
+Maintainer: Radek Polak <psonek2@seznam.cz>
+Build-Depends: debhelper (>= 7.0.50~)
+Standards-Version: 3.8.4
+Homepage: https://github.com/radekp/minitube
+Vcs-Git: git://github.com/radekp/minitube.git
+Vcs-Browser: https://github.com/radekp/minitube
+
+Package: qtmoko-minitube
+Architecture: any
+Depends: 
+Description: Watch YouTube videos

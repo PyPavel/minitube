@@ -128,7 +128,7 @@ include(locale/locale.pri)
 pkg [
     name=minitube
     desc="Watch YouTube videos"
-    license=LGPLv2
+    license=GPLv3
     version=1.0
     maintainer="Radek Polak <psonek2@seznam.cz>"
 ]

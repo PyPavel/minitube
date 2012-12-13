@@ -153,6 +153,13 @@ void DownloadManager::updateStatusMessage() {
 }
 
 QString DownloadManager::defaultDownloadFolder() {
+
+#ifdef QTOPIA
+    if(QDir("/media/card/Documents").exists())
+        return "/media/card/Documents";
+    return "/home/root/Documents";
+#endif
+
     // download in the Movies system folder
     QString path = QDesktopServices::storageLocation(QDesktopServices::MoviesLocation);
     QDir moviesDir(path);

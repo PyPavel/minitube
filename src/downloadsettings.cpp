@@ -10,11 +10,13 @@ DownloadSettings::DownloadSettings(QWidget *parent) : QWidget(parent) {
     message->setOpenExternalLinks(true);
     layout->addWidget(message);
 
+#ifndef QTOPIA
     changeFolderButton = new QPushButton(this);
     changeFolderButton->setText(tr("Change location..."));
     changeFolderButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
     connect(changeFolderButton, SIGNAL(clicked()), SLOT(changeFolder()));
     layout->addWidget(changeFolderButton);
+#endif
 
     updateMessage();
 }
@@ -73,8 +75,12 @@ void DownloadSettings::updateMessage() {
     QString home = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + "/";
     QString displayPath = path;
     displayPath = displayPath.remove(home);
+#ifdef QTOPIA
+    message->setText(tr("Downloading to:\n%1").arg(path));
+#else
     message->setText(
             tr("Downloading to: %1")
             .arg("<a href='file://%1' style='text-decoration:none; color:palette(text); font-weight:bold'>%2</a>")
             .arg(path, displayPath));
+#endif
 }

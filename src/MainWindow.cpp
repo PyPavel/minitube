@@ -48,7 +48,11 @@ MainWindow::MainWindow() :
         downloadView(0),
         mediaObject(0),
         audioOutput(0),
-        m_fullscreen(false) {
+        m_fullscreen(false)
+#if QTOPIA
+       , rotHelper(this, true)
+#endif
+{
 
     singleton = this;
 
@@ -133,13 +137,19 @@ MainWindow::MainWindow() :
     mouseTimer->setSingleShot(true);
     connect(mouseTimer, SIGNAL(timeout()), SLOT(hideMouse()));
 
-#ifndef QTOPIA
+#ifdef QTOPIA
+    connect(&rotHelper, SIGNAL(rotated(bool)), this, SLOT(rotated(bool)));
+    rotHelper.start();
+#else
     QTimer::singleShot(0, this, SLOT(checkForUpdate()));
 #endif
 }
 
 MainWindow::~MainWindow() {
     delete history;
+#ifdef QTOPIA
+    rotHelper.restore();
+#endif
 }
 
 void MainWindow::changeEvent(QEvent* event) {
@@ -1539,4 +1549,13 @@ void MainWindow::printHelp() {
     msg += "  --previous\t\t";
     msg += "Go back to the previous video.\n";
     std::cout << msg.toLocal8Bit().data();
+}
+
+void MainWindow::rotated(bool on)
+{
+#ifdef QTOPIA
+    fullscreen();
+#else
+    Q_UNUSED(on);
+#endif
 }

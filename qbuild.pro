@@ -4,6 +4,8 @@ TARGET=minitube
 CONFIG+=qtopia
 DEFINES+=QTOPIA
 
+MODULES*=accelerometer
+
 # I18n info
 STRING_LANGUAGE=en_US
 LANGUAGES=en_US

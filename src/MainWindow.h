@@ -12,6 +12,10 @@
 #include "AboutView.h"
 #include "downloadview.h"
 
+#ifdef QTOPIA
+#include <rotatehelper.h>
+#endif
+
 class SearchLineEdit;
 class UpdateChecker;
 
@@ -87,6 +91,7 @@ private slots:
     void showStopAfterThisInStatusBar(bool show);
 
     void hideMouse();
+    void rotated(bool on);
 
 private:
     void initPhonon();
@@ -164,6 +169,10 @@ private:
     bool m_maximized;
 
     QTimer *mouseTimer;
+
+#ifdef QTOPIA
+    RotateHelper rotHelper;
+#endif
 
 };
 

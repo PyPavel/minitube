@@ -154,6 +154,7 @@ private:
 
     // toolbar
     QToolBar *mainToolBar;
+    QToolBar *mainToolBar2;
     SearchLineEdit *toolbarSearch;
     QToolBar *statusToolBar;
 
@@ -172,8 +173,11 @@ private:
 
 #ifdef QTOPIA
     RotateHelper rotHelper;
-#endif
+    bool isRotated;
 
+protected:
+    bool event(QEvent *event);
+#endif
 };
 
 #endif

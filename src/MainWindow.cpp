@@ -51,6 +51,7 @@ MainWindow::MainWindow() :
         m_fullscreen(false)
 #if QTOPIA
        , rotHelper(this, true)
+       , isRotated(false)
 #endif
 {
 
@@ -621,7 +622,7 @@ void MainWindow::createToolBars() {
 #endif
 
 #ifdef QTOPIA
-    QToolBar *mainToolBar2 = new QToolBar(this);
+    mainToolBar2 = new QToolBar(this);
 #if QT_VERSION < 0x040600 | defined(APP_MAC)
     mainToolBar2->setToolButtonStyle(Qt::ToolButtonIconOnly);
 #else
@@ -630,7 +631,7 @@ void MainWindow::createToolBars() {
     mainToolBar2->setFloatable(false);
     mainToolBar2->setMovable(false);
 #else
-    QToolBar *mainToolBar2 = mainToolBar;
+    mainToolBar2 = mainToolBar;
 #endif
 
     mainToolBar->addAction(stopAct);
@@ -1061,6 +1062,9 @@ void MainWindow::fullscreen() {
         MacSupport::enterFullScreen(this, views);
 #else
         mainToolBar->hide();
+#ifdef QTOPIA
+        mainToolBar2->hide();
+#endif
         showFullScreen();
 #endif
 
@@ -1071,6 +1075,9 @@ void MainWindow::fullscreen() {
         MacSupport::exitFullScreen(this, views);
 #else
         mainToolBar->show();
+#ifdef QTOPIA
+        mainToolBar2->show();
+#endif
         if (m_maximized) showMaximized();
         else showNormal();
 #endif
@@ -1555,7 +1562,37 @@ void MainWindow::rotated(bool on)
 {
 #ifdef QTOPIA
     fullscreen();
+    isRotated = on;
+    if(on) {
+        showMaximized();
+        setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+        setWindowState(Qt::WindowFullScreen);
+        raise();
+    } else {
+        showMaximized();
+    }
 #else
     Q_UNUSED(on);
 #endif
 }
+
+#ifdef QTOPIA
+bool MainWindow::event(QEvent *event)
+{
+    // Needed for QtMoko fullscreen
+    if(event->type() == QEvent::WindowDeactivate)
+    {
+        lower();
+    }
+    else if(event->type() == QEvent::WindowActivate)
+    {
+        if(isRotated) {
+            QString title = windowTitle();
+            setWindowTitle(QLatin1String("_allow_on_top_"));
+            raise();
+            setWindowTitle(title);
+        }
+    }
+    return QWidget::event(event);
+}
+#endif

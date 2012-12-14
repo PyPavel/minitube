@@ -116,6 +116,7 @@ int main(int argc, char **argv) {
 #else
     app.setMainWidget(&mainWin);
     mainWin.showMaximized();
+    QtopiaApplication::setPowerConstraint(QtopiaApplication::DisableSuspend);
 #endif
 
 #ifndef QTOPIA

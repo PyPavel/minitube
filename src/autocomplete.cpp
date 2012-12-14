@@ -130,7 +130,9 @@ void AutoComplete::showCompletion(const QStringList &choices) {
     popup->move(buddy->mapToGlobal(QPoint(0, buddy->height())));
 
     popup->setFocus();
+#ifndef QTOPIA
     popup->show();
+#endif
 }
 
 void AutoComplete::doneCompletion() {

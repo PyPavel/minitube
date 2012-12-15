@@ -142,5 +142,10 @@ int main(int argc, char **argv) {
     // Seed random number generator
     qsrand(QDateTime::currentDateTime().toTime_t());
 
-    return app.exec();
+    int ret = app.exec();
+
+#ifdef QTOPIA
+    QtopiaApplication::setPowerConstraint(QtopiaApplication::Enable);
+#endif
+    return ret;
 }

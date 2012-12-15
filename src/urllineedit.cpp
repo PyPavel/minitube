@@ -56,6 +56,10 @@
 
 #include <QtCore/QDebug>
 
+#ifdef QTOPIA
+#include <qtopiaapplication.h>
+#endif
+
 ExLineEdit::ExLineEdit(QWidget *parent)
     : QWidget(parent)
     , m_leftWidget(0)
@@ -87,6 +91,10 @@ ExLineEdit::ExLineEdit(QWidget *parent)
             m_lineEdit, SLOT(clear()));
     connect(m_lineEdit, SIGNAL(textChanged(const QString&)),
             m_clearButton, SLOT(textChanged(const QString&)));
+
+#ifdef QTOPIA
+    QtopiaApplication::setInputMethodHint(this, QtopiaApplication::Text);
+#endif
 }
 
 void ExLineEdit::setFont(const QFont &font) {
